@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #6B7FD4;
+  --color-primary-dark: #4A5DAA;
+  --color-primary-light: #E8EBFA;
+  --color-accent: #3D4F6B;
+  --color-green-badge: #4A6741;
+  --font-family-heading: "Playfair Display", serif;
+  --font-family-body: "Nunito", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: "Nunito", sans-serif;
+}
+
+*:focus-visible {
+  outline: 2px solid #6B7FD4;
+  outline-offset: 2px;
+}
