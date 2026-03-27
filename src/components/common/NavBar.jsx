@@ -48,7 +48,7 @@ export default function Navbar() {
           <img
             src="/logo.png"
             alt="Innerpeace Therapy & Wellness"
-            className="h-20 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+            className="h-19 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
           />
         </Link>
 
