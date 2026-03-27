@@ -29,7 +29,7 @@ export default function Navbar() {
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
-
+  
   return (
     <motion.header
       initial={{ y: -80, opacity: 0 }}
@@ -37,8 +37,8 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/90 backdrop-blur-md shadow-sm shadow-[#6B7FD4]/10"
-          : "bg-white"
+          ?  "backdrop-blur-sm bg-white/80 shadow-md"
+          : "linear-gradient(120deg, #b8c6ef 0%, #c5cff5 30%, #c8c6f0 55%, #d4c2f0 75%, #e0c8f5 100%)"
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
@@ -48,7 +48,7 @@ export default function Navbar() {
           <img
             src="/logo.png"
             alt="Innerpeace Therapy & Wellness"
-            className="h-19 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+            className="h-25 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
           />
         </Link>
 

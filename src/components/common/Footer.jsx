@@ -75,7 +75,7 @@ export default function Footer() {
             transition={{ duration: 0.5 }}
             className="space-y-4"
           >
-            <img src="/logo.png" alt="Innerpeace" className="h-18 w-auto object-contain" />
+            <img src="/logo.png" alt="Innerpeace" className="h-28 w-auto object-contain" />
             <p className="text-sm text-[#2D3D6B]/80 leading-relaxed">
               Professional, responsive, and soothing design for therapists,
               counselors, and life coaches.
