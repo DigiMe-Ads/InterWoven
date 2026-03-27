@@ -6,3 +6,9 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# Firebase client-side config and Web3Forms key are intentionally
+# bundled into the JS bundle by Vite — this is by design for browser apps.
+# Firebase security is enforced via Firestore Rules, not key secrecy.
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "VITE_FIREBASE_API_KEY,VITE_FIREBASE_APP_ID,VITE_FIREBASE_AUTH_DOMAIN,VITE_FIREBASE_MESSAGING_SENDER_ID,VITE_FIREBASE_PROJECT_ID,VITE_FIREBASE_STORAGE_BUCKET,VITE_WEB3FORMS_KEY"
