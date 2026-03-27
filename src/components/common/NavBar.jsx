@@ -16,7 +16,6 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { pathname } = useLocation();
 
-  // Derive active label directly from the current URL — no state needed
   const activeLabel = navLinks.find((l) => l.href === pathname)?.label ?? "Home";
 
   useEffect(() => {
@@ -25,11 +24,10 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
-  
+
   return (
     <motion.header
       initial={{ y: -80, opacity: 0 }}
@@ -37,14 +35,14 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ?  "backdrop-blur-sm bg-white/80 shadow-md"
-          : "linear-gradient(120deg, #b8c6ef 0%, #c5cff5 30%, #c8c6f0 55%, #d4c2f0 75%, #e0c8f5 100%)"
+          ? "bg-white/95 backdrop-blur-md shadow-sm shadow-black/5"
+          : "bg-transparent"
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
 
         {/* Logo */}
-        <Link to="/" className="flex items-center group">
+        <Link to="/" className="flex items-center group flex-shrink-0">
           <img
             src="/logo.png"
             alt="Innerpeace Therapy & Wellness"
@@ -61,7 +59,12 @@ export default function Navbar() {
                 key={link.label}
                 to={link.href}
                 className={`px-4 py-2 text-sm font-medium transition-colors duration-200 rounded-full
-                  ${isActive ? "text-[#6B7FD4]" : "text-gray-500 hover:text-[#6B7FD4]"}`}
+                  ${isActive
+                    ? scrolled ? "text-[#6B7FD4]" : "text-white"
+                    : scrolled
+                      ? "text-gray-500 hover:text-[#6B7FD4]"
+                      : "text-white/80 hover:text-white"
+                  }`}
               >
                 {link.label}
               </Link>
@@ -74,7 +77,11 @@ export default function Navbar() {
           <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
             <Link
               to="/contact"
-              className="flex items-center gap-2 bg-[#1E2A4A] text-white text-sm font-medium px-5 py-2.5 rounded-full shadow-md hover:bg-[#4A5DAA] transition-colors duration-200"
+              className={`flex items-center gap-2 text-sm font-medium px-5 py-2.5 rounded-full shadow-md transition-colors duration-200 ${
+                scrolled
+                  ? "bg-[#1E2A4A] text-white hover:bg-[#4A5DAA]"
+                  : "bg-white/20 text-white border border-white/40 hover:bg-white/30 backdrop-blur-sm"
+              }`}
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
@@ -86,28 +93,30 @@ export default function Navbar() {
 
         {/* Mobile Hamburger */}
         <button
-          className="md:hidden p-2 rounded-lg hover:bg-[#E8EBFA] transition-colors"
+          className={`md:hidden p-2 rounded-lg transition-colors ${
+            scrolled ? "hover:bg-[#E8EBFA]" : "hover:bg-white/20"
+          }`}
           onClick={() => setMenuOpen((v) => !v)}
           aria-label="Toggle menu"
         >
           <div className="w-5 space-y-1.5">
             <motion.span
               animate={menuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
-              className="block h-0.5 bg-[#3D4F6B] rounded-full"
+              className={`block h-0.5 rounded-full ${scrolled ? "bg-[#3D4F6B]" : "bg-white"}`}
             />
             <motion.span
               animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
-              className="block h-0.5 bg-[#3D4F6B] rounded-full"
+              className={`block h-0.5 rounded-full ${scrolled ? "bg-[#3D4F6B]" : "bg-white"}`}
             />
             <motion.span
               animate={menuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
-              className="block h-0.5 bg-[#3D4F6B] rounded-full"
+              className={`block h-0.5 rounded-full ${scrolled ? "bg-[#3D4F6B]" : "bg-white"}`}
             />
           </div>
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu — always white bg for readability */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
