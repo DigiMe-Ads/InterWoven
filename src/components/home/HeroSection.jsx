@@ -10,7 +10,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen overflow-hidden flex items-center"
+      className="relative min-h-screen overflow-hidden flex items-end"
       style={{
         background:
           "linear-gradient(120deg, #b8c6ef 0%, #c5cff5 30%, #c8c6f0 55%, #d4c2f0 75%, #e0c8f5 100%)",
@@ -48,17 +48,17 @@ export default function HeroSection() {
       />
 
       {/* Main layout */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 pt-24 pb-0 flex flex-col md:flex-row md:items-end">
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 pt-24 pb-0 flex flex-col md:flex-row md:items-end h-full overflow-hidden">
 
         {/* LEFT: Text content */}
-        <div className="w-full md:w-1/2 pb-8 md:pb-16 space-y-5 text-center md:text-left">
+        <div className="w-full md:w-1/2 pb-8 md:pb-20 space-y-5 text-center md:text-left">
 
           {/* Call us badge — mobile only, shown above heading */}
           <motion.div
             {...fadeUp(0.1)}
             className="flex md:hidden justify-center"
           >
-            <div className="flex items-center gap-3 bg-[#425CA9] text-white pl-2 pr-5 py-2 rounded-full shadow-xl">
+            <div className="flex items-center gap-3 bg-[#3D4F8F] text-white pl-2 pr-5 py-2 rounded-full shadow-xl">
               <div className="w-9 h-9 rounded-full bg-[#6B7FD4] flex items-center justify-center flex-shrink-0">
                 <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -74,7 +74,7 @@ export default function HeroSection() {
           {/* Eyebrow */}
           <motion.p
             {...fadeUp(0.15)}
-            className="text-xs font-extrabold tracking-[0.18em] uppercase text-[#425CA9]"
+            className="text-xs font-semibold tracking-[0.18em] uppercase text-white/80"
           >
             Find Balance, Embrace Life
           </motion.p>
@@ -86,7 +86,7 @@ export default function HeroSection() {
           >
             <span className="text-white">Caring for Your</span>
             <br />
-            <span className="text-[#425CA9] font-extrabold">Inner</span>
+            <span className="text-[#3D4F8F] font-extrabold">Inner</span>
             <span className="text-white font-bold"> Peace</span>
           </motion.h1>
 
@@ -117,7 +117,7 @@ export default function HeroSection() {
               href="#contact"
               whileHover={{ scale: 1.04, boxShadow: "0 8px 28px rgba(61,79,143,0.4)" }}
               whileTap={{ scale: 0.97 }}
-              className="bg-[#425CA9] text-white text-sm font-semibold px-7 py-3.5 rounded-full shadow-lg"
+              className="bg-[#3D4F8F] text-white text-sm font-semibold px-7 py-3.5 rounded-full shadow-lg"
             >
               Start A Checkup Now
             </motion.a>
@@ -125,7 +125,7 @@ export default function HeroSection() {
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              className="w-11 h-11 rounded-full bg-[#425CA9] flex items-center justify-center shadow-lg"
+              className="w-11 h-11 rounded-full bg-[#3D4F8F] flex items-center justify-center shadow-lg"
             >
               <svg className="w-4 h-4 text-white ml-0.5" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M8 5v14l11-7z" />
@@ -146,7 +146,7 @@ export default function HeroSection() {
         </div>
 
         {/* RIGHT: Hero image + badges — desktop layout */}
-        <div className="w-full md:w-1/2 relative flex justify-center items-end">
+        <div className="w-full md:w-1/2 relative flex justify-center items-end self-end">
 
           {/* Call us badge — desktop only */}
           <motion.div
@@ -155,7 +155,7 @@ export default function HeroSection() {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="hidden md:flex absolute top-6 right-0 z-30"
           >
-            <div className="flex items-center gap-3 bg-[#425CA9] text-white pl-2 pr-5 py-2 rounded-full shadow-xl">
+            <div className="flex items-center gap-3 bg-[#3D4F8F] text-white pl-2 pr-5 py-2 rounded-full shadow-xl">
               <div className="w-10 h-10 rounded-full bg-[#6B7FD4] flex items-center justify-center flex-shrink-0">
                 <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -188,8 +188,8 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.25 }}
-            className="relative z-20 w-full object-contain object-bottom"
-            style={{ maxHeight: "70vh", maxWidth: 420 }}
+            className="relative z-20 w-full object-contain block"
+            style={{ maxWidth: 500, height: "82vh", objectPosition: "bottom", objectFit: "contain" }}
           />
         </div>
       </div>
