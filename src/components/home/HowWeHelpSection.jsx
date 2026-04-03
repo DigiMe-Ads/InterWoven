@@ -26,7 +26,7 @@ export default function HowWeHelpSection() {
     <section
       className="relative overflow-hidden py-16 px-6"
       style={{
-        background: "linear-gradient(135deg, rgba(59, 103, 191, 0.9) 0%, #FFFFFF 100%)",
+        background: "linear-gradient(135deg, rgba(122, 171, 138, 1) 0%, #FFFFFF 100%)",
       }}
     >
       {/* TOP PART: heading left, text+button right */}
@@ -96,7 +96,7 @@ export default function HowWeHelpSection() {
               {/* Large faded number behind */}
               <span
                 className="absolute -top-4 -left-1 text-7xl font-extrabold select-none pointer-events-none"
-                style={{ color: "rgba(107,127,212,0.25)", lineHeight: 1 }}
+                style={{ color: "rgba(0, 76, 76,0.25)", lineHeight: 1 }}
               >
                 {step.number}
               </span>

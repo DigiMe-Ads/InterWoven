@@ -61,14 +61,14 @@ function Calendar({ onSelectDate, bookedSlotsMap, loading }) {
     <div className="w-full">
       {/* Month nav */}
       <div className="flex items-center justify-between mb-4">
-        <button onClick={prevMonth} className="w-8 h-8 rounded-full hover:bg-[#E8EBFA] flex items-center justify-center transition-colors">
-          <svg className="w-4 h-4 text-[#3D4F6B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <button onClick={prevMonth} className="w-8 h-8 rounded-full hover:bg-[#E8F5F5] flex items-center justify-center transition-colors">
+          <svg className="w-4 h-4 text-[#2D6B6B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        <span className="text-sm font-bold text-[#1E2A4A]">{MONTH_NAMES[month]} {year}</span>
-        <button onClick={nextMonth} className="w-8 h-8 rounded-full hover:bg-[#E8EBFA] flex items-center justify-center transition-colors">
-          <svg className="w-4 h-4 text-[#3D4F6B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <span className="text-sm font-bold text-[#1A3D3D]">{MONTH_NAMES[month]} {year}</span>
+        <button onClick={nextMonth} className="w-8 h-8 rounded-full hover:bg-[#E8F5F5] flex items-center justify-center transition-colors">
+          <svg className="w-4 h-4 text-[#2D6B6B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </button>
@@ -83,7 +83,7 @@ function Calendar({ onSelectDate, bookedSlotsMap, loading }) {
 
       {loading ? (
         <div className="flex items-center justify-center py-10">
-          <div className="w-6 h-6 border-2 border-[#4A5DAA] border-t-transparent rounded-full animate-spin" />
+          <div className="w-6 h-6 border-2 border-[#2D8080] border-t-transparent rounded-full animate-spin" />
         </div>
       ) : (
         <div className="grid grid-cols-7 gap-y-1">
@@ -100,7 +100,7 @@ function Calendar({ onSelectDate, bookedSlotsMap, loading }) {
                 title={status === "full" ? "Fully booked" : status === "unavailable" ? "Not available" : ""}
                 className={`mx-auto w-9 h-9 rounded-full text-sm font-medium transition-all
                   ${status === "available"
-                    ? "bg-[#4A5DAA] text-white hover:bg-[#3D4F8F] hover:scale-110 shadow-sm cursor-pointer"
+                    ? "bg-[#2D8080] text-white hover:bg-[#236B6B] hover:scale-110 shadow-sm cursor-pointer"
                     : status === "full"
                     ? "bg-red-100 text-red-400 cursor-not-allowed"
                     : "text-gray-300 cursor-not-allowed"
@@ -116,7 +116,7 @@ function Calendar({ onSelectDate, bookedSlotsMap, loading }) {
       {/* Legend */}
       <div className="flex items-center gap-4 mt-4 pt-3 border-t border-gray-100 flex-wrap">
         <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded-full bg-[#4A5DAA]" />
+          <div className="w-3 h-3 rounded-full bg-[#2D8080]" />
           <span className="text-xs text-gray-400">Available</span>
         </div>
         <div className="flex items-center gap-1.5">
@@ -140,8 +140,7 @@ function BookingDialog({ date, bookedSlotsMap, onClose, onConfirm }) {
   const [status, setStatus]     = useState("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
-  // Slots already booked for this date (from local state for instant UI)
-  const takenSlots = bookedSlotsMap[date] || [];
+  const takenSlots     = bookedSlotsMap[date] || [];
   const availableSlots = TIME_SLOTS.filter((s) => !takenSlots.includes(s));
 
   const handleChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -155,7 +154,6 @@ function BookingDialog({ date, bookedSlotsMap, onClose, onConfirm }) {
     setStatus("submitting");
     setErrorMsg("");
 
-    // Race condition guard — double-check slot on server
     const slotTaken = await isSlotBooked(date, form.time);
     if (slotTaken) {
       setStatus("error");
@@ -211,10 +209,10 @@ function BookingDialog({ date, bookedSlotsMap, onClose, onConfirm }) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h3 className="text-xl font-extrabold text-[#1E2A4A]">Booking Confirmed!</h3>
+            <h3 className="text-xl font-extrabold text-[#1A3D3D]">Booking Confirmed!</h3>
             <p className="text-sm text-gray-400">
-              Appointment on <span className="font-bold text-[#4A5DAA]">{formatDate(date)}</span> at{" "}
-              <span className="font-bold text-[#4A5DAA]">{formatTime(form.time)}</span>.
+              Appointment on <span className="font-bold text-[#2D8080]">{formatDate(date)}</span> at{" "}
+              <span className="font-bold text-[#2D8080]">{formatTime(form.time)}</span>.
               <br />The therapist has been notified.
             </p>
           </div>
@@ -233,8 +231,8 @@ function BookingDialog({ date, bookedSlotsMap, onClose, onConfirm }) {
         {/* Form */}
         {(status === "idle" || status === "submitting") && (
           <>
-            <h3 className="text-xl font-extrabold text-[#1E2A4A] mb-1">Book Appointment</h3>
-            <p className="text-xs text-[#6B7FD4] font-semibold mb-5">📅 {formatDate(date)}</p>
+            <h3 className="text-xl font-extrabold text-[#1A3D3D] mb-1">Book Appointment</h3>
+            <p className="text-xs text-[#2D8080] font-semibold mb-5">📅 {formatDate(date)}</p>
 
             {errorMsg && (
               <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-xs text-red-600 mb-3">{errorMsg}</div>
@@ -243,32 +241,46 @@ function BookingDialog({ date, bookedSlotsMap, onClose, onConfirm }) {
             <form onSubmit={handleSubmit} className="space-y-3">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-[#3D4F6B] mb-1 block">Name *</label>
+                  <label className="text-xs font-semibold text-[#1A3D3D] mb-1 block">Name *</label>
                   <input name="name" required value={form.name} onChange={handleChange} placeholder="Your name"
-                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-[#6B7FD4] transition-colors" />
+                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-[#2D8080] transition-colors" />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-[#3D4F6B] mb-1 block">Email *</label>
+                  <label className="text-xs font-semibold text-[#1A3D3D] mb-1 block">Email *</label>
                   <input name="email" type="email" required value={form.email} onChange={handleChange} placeholder="Your email"
-                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-[#6B7FD4] transition-colors" />
+                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-[#2D8080] transition-colors" />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-[#3D4F6B] mb-1 block">Phone</label>
+                  <label className="text-xs font-semibold text-[#1A3D3D] mb-1 block">Phone</label>
                   <input name="phone" value={form.phone} onChange={handleChange} placeholder="Your phone"
-                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-[#6B7FD4] transition-colors" />
+                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-[#2D8080] transition-colors" />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-[#3D4F6B] mb-1 block">Time Slot *</label>
-                  <select name="time" required value={form.time} onChange={handleChange}
-                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-[#6B7FD4] transition-colors bg-white"
+                  <label className="text-xs font-semibold text-[#1A3D3D] mb-1 block">Time Slot *</label>
+                  {/* ── All slots shown — taken ones are greyed out and unselectable ── */}
+                  <select
+                    name="time"
+                    required
+                    value={form.time}
+                    onChange={handleChange}
+                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-[#2D8080] transition-colors bg-white"
                   >
                     <option value="">Select time</option>
-                    {availableSlots.map((slot) => (
-                      <option key={slot} value={slot}>{formatTime(slot)}</option>
-                    ))}
+                    {TIME_SLOTS.map((slot) => {
+                      const isTaken = takenSlots.includes(slot);
+                      return (
+                        <option
+                          key={slot}
+                          value={isTaken ? "" : slot}
+                          disabled={isTaken}
+                        >
+                          {formatTime(slot)}{isTaken ? " — Taken" : ""}
+                        </option>
+                      );
+                    })}
                   </select>
                   {availableSlots.length === 0 && (
                     <p className="text-xs text-red-400 mt-1">No slots left for this day.</p>
@@ -277,15 +289,15 @@ function BookingDialog({ date, bookedSlotsMap, onClose, onConfirm }) {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-[#3D4F6B] mb-1 block">Subject</label>
+                <label className="text-xs font-semibold text-[#1A3D3D] mb-1 block">Subject</label>
                 <input name="subject" value={form.subject} onChange={handleChange} placeholder="e.g. Anxiety, Stress Management"
-                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-[#6B7FD4] transition-colors" />
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-[#2D8080] transition-colors" />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-[#3D4F6B] mb-1 block">Message</label>
+                <label className="text-xs font-semibold text-[#1A3D3D] mb-1 block">Message</label>
                 <textarea name="message" rows={3} value={form.message} onChange={handleChange} placeholder="Tell us your story..."
-                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-[#6B7FD4] transition-colors resize-none" />
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-[#2D8080] transition-colors resize-none" />
               </div>
 
               <motion.button
@@ -293,7 +305,7 @@ function BookingDialog({ date, bookedSlotsMap, onClose, onConfirm }) {
                 disabled={status === "submitting" || availableSlots.length === 0}
                 whileHover={status !== "submitting" ? { scale: 1.02 } : {}}
                 whileTap={status !== "submitting" ? { scale: 0.98 } : {}}
-                className="w-full bg-[#2D3D7A] text-white font-semibold text-sm py-3.5 rounded-xl shadow-md hover:bg-[#1E2A4A] transition-colors mt-1 flex items-center justify-center gap-2 disabled:opacity-60"
+                className="w-full bg-[#2D8080] text-white font-semibold text-sm py-3.5 rounded-xl shadow-md hover:bg-[#236B6B] transition-colors mt-1 flex items-center justify-center gap-2 disabled:opacity-60"
               >
                 {status === "submitting" ? (
                   <>
@@ -317,7 +329,6 @@ export default function ContactSection() {
   const [loading,        setLoading]        = useState(true);
   const [confirmedList,  setConfirmedList]  = useState([]);
 
-  // Load all booked slots from Firestore once on mount
   useEffect(() => {
     getAllBookedSlots().then((map) => {
       setBookedSlotsMap(map);
@@ -326,7 +337,6 @@ export default function ContactSection() {
   }, []);
 
   const handleConfirm = (date, time) => {
-    // Update local map instantly so UI reflects without refetching
     setBookedSlotsMap((prev) => ({
       ...prev,
       [date]: [...(prev[date] || []), time],
@@ -364,7 +374,7 @@ export default function ContactSection() {
 
             {/* LEFT: Calendar */}
             <div className="p-8 border-r border-gray-100">
-              <h3 className="text-lg font-extrabold text-[#1E2A4A] mb-1">Select an Available Date</h3>
+              <h3 className="text-lg font-extrabold text-[#1A3D3D] mb-1">Select an Available Date</h3>
               <p className="text-xs text-gray-400 mb-6">
                 {loading ? "Loading..." : "Click any date to see available time slots."}
               </p>
@@ -377,10 +387,10 @@ export default function ContactSection() {
 
               {confirmedList.length > 0 && (
                 <div className="mt-5 pt-4 border-t border-gray-100">
-                  <p className="text-xs font-bold text-[#4A5DAA] mb-2">Your bookings this session:</p>
+                  <p className="text-xs font-bold text-[#2D8080] mb-2">Your bookings this session:</p>
                   {confirmedList.map((b, i) => (
                     <div key={i} className="flex items-center gap-2 text-xs text-gray-500 mb-1">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#4A5DAA]" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#2D8080]" />
                       {formatDate(b.date)} at {formatTime(b.time)}
                     </div>
                   ))}
@@ -389,7 +399,7 @@ export default function ContactSection() {
             </div>
 
             {/* RIGHT: Contact info */}
-            <div className="p-8 flex flex-col gap-6" style={{ background: "linear-gradient(145deg, #7B8FE4 0%, #5B6FD4 100%)" }}>
+            <div className="p-8 flex flex-col gap-6" style={{ background: "linear-gradient(145deg, #2D9E9E 0%, #1F7A7A 100%)" }}>
               <div>
                 <h3 className="text-xl font-extrabold text-white leading-snug">Need Any Help? Get In Touch With Us</h3>
                 <p className="text-xs text-white/70 mt-2 leading-relaxed">

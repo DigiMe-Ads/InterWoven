@@ -6,7 +6,7 @@ const features = [
     title: "Personalized\nWellness Plans",
     description:
       "Tailored guidance crafted to meet your unique needs and goals effectively.",
-    bg: "#4A6741",        // green
+    bg: "#6B8A62",        // green
     iconSrc: "/images/home/wellness.png",
   },
   {
@@ -14,7 +14,7 @@ const features = [
     title: "Expert-Led\nCounseling Sessions",
     description:
       "Professional support designed to guide emotional well-being every single day.",
-    bg: "#7D2A4A",        // dark pink/maroon
+    bg: "#9E4D6B",        // dark pink/maroon
     iconSrc: "/images/home/councelling.png",
   },
   {
@@ -22,7 +22,7 @@ const features = [
     title: "24/7 Support\nCommunity",
     description:
       "Always-connected space offering care, encouragement, and shared growth.",
-    bg: "#4A5DAA",        // medium blue
+    bg: "#6B7DC2",        // medium blue
     iconSrc: "/images/home/support.png",
   },
   {
@@ -30,7 +30,7 @@ const features = [
     title: "Interactive\nSelf-Care Tools",
     description:
       "Empowering digital resources to build healthy habits independently.",
-    bg: "#3B5998",        // deeper blue
+    bg: "#66b2b2",        // deeper blue
     iconSrc: "/images/home/tools.png",
   },
 ];
@@ -57,7 +57,7 @@ function FeatureCard({ feature, index }) {
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
       className="rounded-2xl p-5 flex flex-col gap-4 min-h-[170px]"
-      style={{ backgroundColor: feature.bg }}
+      style={{ backgroundColor: feature.bg,}}
     >
       {/* Top row: icon + title */}
       <div className="flex items-start gap-3">

@@ -12,9 +12,9 @@ export default function HeroSection() {
       id="home"
       className="relative min-h-screen overflow-hidden flex items-end"
       style={{
-        background:
-          "linear-gradient(120deg, #b8c6ef 0%, #c5cff5 30%, #c8c6f0 55%, #d4c2f0 75%, #e0c8f5 100%)",
-      }}
+  background:
+    "linear-gradient(120deg, #7aab8a 0%, #90bc9e 30%, #a8ccb4 55%, #bfd9c8 75%, #d4eadc 100%)",
+}}
     >
       {/* Decorative curved arc lines — right side, hidden on mobile */}
       <svg
