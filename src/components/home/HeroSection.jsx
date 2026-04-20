@@ -12,9 +12,9 @@ export default function HeroSection() {
       id="home"
       className="relative min-h-screen overflow-hidden flex items-end"
       style={{
-  background:
-    "linear-gradient(120deg, #7aab8a 0%, #90bc9e 30%, #a8ccb4 55%, #bfd9c8 75%, #d4eadc 100%)",
-}}
+        background:
+          "linear-gradient(120deg, #7aab8a 0%, #90bc9e 30%, #a8ccb4 55%, #bfd9c8 75%, #d4eadc 100%)",
+      }}
     >
       {/* Decorative curved arc lines — right side, hidden on mobile */}
       <svg
@@ -48,46 +48,28 @@ export default function HeroSection() {
       />
 
       {/* Main layout */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 pt-24 pb-0 flex flex-col md:flex-row md:items-end h-full overflow-hidden">
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 pt-32 md:pt-24 pb-0 flex flex-col md:flex-row md:items-end h-full overflow-hidden">
 
         {/* LEFT: Text content */}
         <div className="w-full md:w-1/2 pb-8 md:pb-20 space-y-5 text-center md:text-left">
-
-          {/* Call us badge — mobile only, shown above heading */}
-          <motion.div
-            {...fadeUp(0.1)}
-            className="flex md:hidden justify-center"
-          >
-            <div className="flex items-center gap-3 bg-[#3D4F8F] text-white pl-2 pr-5 py-2 rounded-full shadow-xl">
-              <div className="w-9 h-9 rounded-full bg-[#6B7FD4] flex items-center justify-center flex-shrink-0">
-                <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
-              </div>
-              <div className="leading-tight">
-                <p className="text-[10px] opacity-70 tracking-wide">Call us anytime</p>
-                <p className="text-sm font-bold tracking-wide">(555) 123-4567</p>
-              </div>
-            </div>
-          </motion.div>
 
           {/* Eyebrow */}
           <motion.p
             {...fadeUp(0.15)}
             className="text-xs font-semibold tracking-[0.18em] uppercase text-white/80"
           >
-            Find Balance, Embrace Life
+            You don't have to navigate life alone.
           </motion.p>
 
           {/* Headline */}
           <motion.h1
             {...fadeUp(0.2)}
-            className="text-4xl sm:text-5xl lg:text-[3.4rem] font-bold leading-tight"
+            className="text-2xl sm:text-4xl lg:text-[3.4rem] font-bold leading-tight"
           >
-            <span className="text-white">Caring for Your</span>
+            <span className="text-white">Support, guidance, </span>
             <br />
-            <span className="text-[#3D4F8F] font-extrabold">Inner</span>
-            <span className="text-white font-bold"> Peace</span>
+            <span className="text-[#3D4F8F] font-extrabold">and growth</span>
+            <span className="text-white font-bold"> all in one place</span>
           </motion.h1>
 
           {/* Divider */}
@@ -103,9 +85,7 @@ export default function HeroSection() {
             {...fadeUp(0.35)}
             className="text-sm text-white/80 leading-relaxed max-w-xs mx-auto md:mx-0"
           >
-            Discover clarity, confidence, and emotional wellness through guided
-            support that helps you manage stress, heal from within, and grow
-            stronger in every aspect of your mental health journey.
+            Interwoven connects individuals with the support they need to grow, heal, and thrive.
           </motion.p>
 
           {/* CTAs */}
@@ -133,14 +113,28 @@ export default function HeroSection() {
             </motion.button>
           </motion.div>
 
-          {/* Rating badge — mobile only, shown below CTAs */}
+          {/* Mobile-only: Call badge + Rating side by side */}
           <motion.div
             {...fadeUp(0.55)}
-            className="flex md:hidden justify-center pt-2"
+            className="flex md:hidden justify-center items-center gap-3 pt-2"
           >
-            <div className="bg-[#4A6741] text-white px-6 py-3 rounded-2xl shadow-lg text-center inline-block">
-              <p className="text-xl font-bold leading-none">4.9 /5</p>
-              <p className="text-[10px] opacity-80 mt-1 tracking-wide">Review on Google</p>
+            {/* Call us badge */}
+            <div className="flex items-center gap-2 bg-[#3D4F8F] text-white pl-2 pr-4 py-2 rounded-full shadow-xl">
+              <div className="w-8 h-8 rounded-full bg-[#6B7FD4] flex items-center justify-center flex-shrink-0">
+                <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+              </div>
+              <div className="leading-tight">
+                <p className="text-[9px] opacity-70 tracking-wide">Call us anytime</p>
+                <p className="text-xs font-bold tracking-wide">(555) 123-4567</p>
+              </div>
+            </div>
+
+            {/* Rating badge */}
+            <div className="bg-[#4A6741] text-white px-4 py-2.5 rounded-2xl shadow-lg text-center">
+              <p className="text-base font-bold leading-none">4.9 /5</p>
+              <p className="text-[9px] opacity-80 mt-0.5 tracking-wide">Review on Google</p>
             </div>
           </motion.div>
         </div>
