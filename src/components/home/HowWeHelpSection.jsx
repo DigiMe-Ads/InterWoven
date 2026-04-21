@@ -3,19 +3,19 @@ import { motion } from "framer-motion";
 const steps = [
   {
     number: "01",
-    title: "Listen & Understand",
+    title: "Tell us about you",
     description:
       "Your wellness journey matters. We're dedicated to supporting both your mental clarity and emotional strength every step forward.",
   },
   {
     number: "02",
-    title: "Create A Tailored Plan",
+    title: "Get matched with the right expert",
     description:
       "From everyday stress to life's hardest moments, our team stands ready to support your healing and overall well-being.",
   },
   {
     number: "03",
-    title: "Support & Empower",
+    title: "Start your journey ",
     description:
       "Empowering you to live well with care that nurtures your body, mind, and emotional peace every single day.",
   },

@@ -1,11 +1,21 @@
 import { motion } from "framer-motion";
 
 const bulletPoints = [
-  "Prioritizing well-being helps you thrive emotionally, socially, and personally every day.",
-  "Strong minds build strong lives; support and care create lasting peace.",
-  "Inner peace starts with awareness, acceptance, and support when it's needed most.",
-  "Emotional strength shapes how we live, connect, and move forward confidently.",
+  {
+    label: "Our Mission",
+    text: "To make support accessible, break stigma, and empower individuals to live better lives.",
+  },
+  {
+    label: "Our Vision",
+    text: "A world where support is normalized, growth is continuous, and no one feels alone.",
+  },
+  {
+    label: "Why 'Interwoven'",
+    text: "Life is interconnected — our emotions, experiences, and growth are all woven together. Interwoven represents this journey of connection and support.",
+  },
 ];
+
+const bulletLabels = ["Introduction", "Mission", "Vision"];
 
 const services = [
   "Free Consultation",
@@ -56,6 +66,10 @@ export default function MentalHealthMattersSection() {
               Because Your Mental<br />Health Matters
             </h2>
 
+            <p className="text-sm text-gray-500 leading-relaxed max-w-lg">
+              At Interwoven, we believe every individual deserves access to guidance, support, and growth opportunities. 
+            </p>
+
             {/* Bullet points */}
             <ul className="space-y-3 pt-1">
               {bulletPoints.map((point, i) => (
@@ -67,7 +81,6 @@ export default function MentalHealthMattersSection() {
                   transition={{ duration: 0.4, delay: 0.2 + i * 0.08 }}
                   className="flex items-start gap-3"
                 >
-                  {/* Chevron icon */}
                   <svg
                     className="w-4 h-4 text-[#6B7FD4] flex-shrink-0 mt-0.5"
                     fill="none"
@@ -81,7 +94,10 @@ export default function MentalHealthMattersSection() {
                       d="M9 5l7 7-7 7"
                     />
                   </svg>
-                  <span className="text-sm text-gray-500 leading-relaxed">{point}</span>
+                  <span className="text-sm text-gray-500 leading-relaxed">
+                    <span className="font-semibold text-[#1E2A4A]">{point.label}: </span>
+                    {point.text}
+                  </span>
                 </motion.li>
               ))}
             </ul>
@@ -99,7 +115,7 @@ export default function MentalHealthMattersSection() {
             }}
           >
             <h3 className="text-base font-extrabold text-white leading-snug">
-              Together, We overcome
+              Together, We Overcome
             </h3>
 
             <div className="space-y-3 pt-1">

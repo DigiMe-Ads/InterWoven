@@ -3,25 +3,25 @@ import { motion } from "framer-motion";
 const services = [
   {
     id: 1,
-    title: "Individual Therapy",
+    title: "1:1 Sessions",
     description:
-      "Tailored guidance crafted to meet your unique needs and goals effectively.",
+      "Personalized support tailored to individual needs",
     image: "/images/home/service-individual.jpg",
     icon: "/images/home/icon-indivdual.png",
   },
   {
     id: 2,
-    title: "Group Counseling",
+    title: "Personal Development",
     description:
-      "Professional support designed to guide emotional well-being every single day.",
+      "Growth-focused programs to improve mindset and performance",
     image: "/images/home/service-group.jpg",
     icon: "/images/home/icon-group.png",
   },
   {
     id: 3,
-    title: "Stress Management",
+    title: "Mental Wellness Support",
     description:
-      "Empowering digital resources to build healthy habits independently.",
+      "Guidance for emotional and mental well-being",
     image: "/images/home/service-stress.jpg",
     icon: "/images/home/icon-stress.png",
   },

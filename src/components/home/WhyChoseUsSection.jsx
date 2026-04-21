@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
 
 const checkItems = [
-  "Compassionate & Experienced Professionals",
-  "Holistic Approach To Well-Being",
-  "Safe & Supportive Environment",
+  "Expert professionals",
+  "Flexible & accessible",
+  "Confidential & safe",
+  "Personalized support"
 ];
 
 const stats = [

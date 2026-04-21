@@ -61,8 +61,8 @@ export default function HowWeHelpAboutSection() {
             className="flex flex-col gap-4 lg:pt-6"
           >
             <p className="text-sm text-[#3D4F6B]/80 leading-relaxed max-w-sm">
-              We offer compassionate care, combining physical and emotional
-              support to help you thrive in every aspect.
+              We connect individuals with experienced professionals through a seamless 
+              digital experience designed for convenience, privacy, and impact. 
             </p>
             <motion.a
               href="#contact"

@@ -64,7 +64,7 @@ export default function AboutSection() {
         >
           {/* Eyebrow */}
           <p className="text-xs font-extrabold uppercase text-[#6B7FD4]">
-            About Us
+            What is Interwoven
           </p>
 
           {/* Heading */}
@@ -74,12 +74,7 @@ export default function AboutSection() {
 
           {/* Body paragraph */}
           <p className="text-sm text-gray-500 leading-relaxed max-w-lg">
-            Every small step toward better mental health is a significant achievement in our
-            lives. With the right support, each individual can find the strength to face challenges,
-            manage stress, and build positive habits. We believe that everyone deserves the
-            opportunity to grow, thrive, and experience inner peace. Through an empathetic and
-            professional approach, we are here to help you discover the best solutions for
-            lasting mental and emotional well-being.
+            Interwoven is a modern platform designed to support your mental, emotional, and personal growth through expert-led guidance and accessible services. 
           </p>
 
           {/* Check items — 2 column grid */}
