@@ -36,7 +36,8 @@ export default function Navbar() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? "bg-white/95 backdrop-blur-md shadow-sm shadow-black/5"
-          : "bg-transparent"
+          // : "bg-transparent"
+          : "bg-white/95 backdrop-blur-md shadow-sm shadow-black/5"
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
@@ -46,7 +47,7 @@ export default function Navbar() {
           <img
             src="/logo.png"
             alt="Innerpeace Therapy & Wellness"
-            className="h-25 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+            className="h-18 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
           />
         </Link>
 
@@ -58,12 +59,13 @@ export default function Navbar() {
               <Link
                 key={link.label}
                 to={link.href}
-                className={`px-4 py-2 text-sm font-medium transition-colors duration-200 rounded-full
+                className={`px-4 py-2 text-md font-bold transition-colors duration-200 rounded-full
                   ${isActive
-                    ? scrolled ? "text-[#6B7FD4]" : "text-white"
+                    ? scrolled ? "text-[#6B7FD4]" : "text-[#6B7FD4]"
                     : scrolled
-                      ? "text-gray-500 hover:text-[#6B7FD4]"
-                      : "text-white/80 hover:text-white"
+                      ? "text-black hover:text-[#6B7FD4]"
+                      // : "text-white/80 hover:text-white"
+                      : "text-black hover:text-[#6B7FD4] "
                   }`}
               >
                 {link.label}
@@ -80,7 +82,8 @@ export default function Navbar() {
               className={`flex items-center gap-2 text-sm font-medium px-5 py-2.5 rounded-full shadow-md transition-colors duration-200 ${
                 scrolled
                   ? "bg-[#1E2A4A] text-white hover:bg-[#4A5DAA]"
-                  : "bg-white/20 text-white border border-white/40 hover:bg-white/30 backdrop-blur-sm"
+                  // : "bg-white/20 text-white border border-white/40 hover:bg-white/30 backdrop-blur-sm"
+                  : "bg-[#1E2A4A] text-white hover:bg-[#4A5DAA]"
               }`}
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

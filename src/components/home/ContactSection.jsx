@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   TIME_SLOTS,
   BLOCKED_DATES,
-  getAllBookedSlots,
+
   isSlotBooked,
   saveBooking,
   sendBookingEmail,
@@ -51,7 +51,6 @@ function Calendar({ onSelectDate, bookedSlotsMap, loading }) {
     const isPast    = new Date(dateStr) < new Date(today.toDateString());
     const isBlocked = BLOCKED_DATES.includes(dateStr);
     if (isPast || isBlocked) return "unavailable";
-
     const bookedSlots = bookedSlotsMap[dateStr] || [];
     if (bookedSlots.length >= TIME_SLOTS.length) return "full";
     return "available";
@@ -59,7 +58,6 @@ function Calendar({ onSelectDate, bookedSlotsMap, loading }) {
 
   return (
     <div className="w-full">
-      {/* Month nav */}
       <div className="flex items-center justify-between mb-4">
         <button onClick={prevMonth} className="w-8 h-8 rounded-full hover:bg-[#E8F5F5] flex items-center justify-center transition-colors">
           <svg className="w-4 h-4 text-[#2D6B6B]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -74,7 +72,6 @@ function Calendar({ onSelectDate, bookedSlotsMap, loading }) {
         </button>
       </div>
 
-      {/* Day headers */}
       <div className="grid grid-cols-7 mb-2">
         {DAY_NAMES.map((d) => (
           <div key={d} className="text-center text-[10px] font-bold text-gray-400 py-1">{d}</div>
@@ -91,7 +88,6 @@ function Calendar({ onSelectDate, bookedSlotsMap, loading }) {
             if (!day) return <div key={`e-${i}`} />;
             const dateStr = `${year}-${pad(month + 1)}-${pad(day)}`;
             const status  = getDayStatus(dateStr);
-
             return (
               <button
                 key={dateStr}
@@ -113,7 +109,6 @@ function Calendar({ onSelectDate, bookedSlotsMap, loading }) {
         </div>
       )}
 
-      {/* Legend */}
       <div className="flex items-center gap-4 mt-4 pt-3 border-t border-gray-100 flex-wrap">
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded-full bg-[#2D8080]" />
@@ -133,9 +128,9 @@ function Calendar({ onSelectDate, bookedSlotsMap, loading }) {
 }
 
 // ── Booking Dialog ────────────────────────────────────────────────────────────
-function BookingDialog({ date, bookedSlotsMap, onClose, onConfirm }) {
+function BookingDialog({ date, bookedSlotsMap, onClose, onConfirm, prefillSubject }) {
   const [form, setForm] = useState({
-    name: "", email: "", phone: "", time: "", subject: "", message: "",
+    name: "", email: "", phone: "", time: "", subject: prefillSubject || "", message: "",
   });
   const [status, setStatus]     = useState("idle");
   const [errorMsg, setErrorMsg] = useState("");
@@ -147,10 +142,7 @@ function BookingDialog({ date, bookedSlotsMap, onClose, onConfirm }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.time) {
-      setErrorMsg("Please select a time slot.");
-      return;
-    }
+    if (!form.time) { setErrorMsg("Please select a time slot."); return; }
     setStatus("submitting");
     setErrorMsg("");
 
@@ -162,7 +154,6 @@ function BookingDialog({ date, bookedSlotsMap, onClose, onConfirm }) {
     }
 
     const bookingData = { ...form, date };
-
     const saveResult = await saveBooking(bookingData);
     if (!saveResult.success) {
       setStatus("error");
@@ -171,10 +162,16 @@ function BookingDialog({ date, bookedSlotsMap, onClose, onConfirm }) {
     }
 
     await sendBookingEmail(bookingData);
-
     setStatus("success");
     setTimeout(() => { onConfirm(date, form.time); onClose(); }, 2500);
   };
+
+  // Badge color based on therapy type
+  const subjectColor = form.subject === "Couples Therapy"
+    ? "bg-[#4A6741]"
+    : form.subject === "Individual Therapy"
+    ? "bg-[#3D4F8F]"
+    : "bg-[#2D8080]";
 
   return (
     <motion.div
@@ -231,7 +228,15 @@ function BookingDialog({ date, bookedSlotsMap, onClose, onConfirm }) {
         {/* Form */}
         {(status === "idle" || status === "submitting") && (
           <>
-            <h3 className="text-xl font-extrabold text-[#1A3D3D] mb-1">Book Appointment</h3>
+            <div className="flex items-center justify-between mb-1">
+              <h3 className="text-xl font-extrabold text-[#1A3D3D]">Book Appointment</h3>
+              {/* Therapy type badge — shown if prefilled */}
+              {form.subject && (
+                <span className={`text-xs font-bold text-white px-3 py-1 rounded-full ${subjectColor}`}>
+                  {form.subject}
+                </span>
+              )}
+            </div>
             <p className="text-xs text-[#2D8080] font-semibold mb-5">📅 {formatDate(date)}</p>
 
             {errorMsg && (
@@ -260,7 +265,6 @@ function BookingDialog({ date, bookedSlotsMap, onClose, onConfirm }) {
                 </div>
                 <div>
                   <label className="text-xs font-semibold text-[#1A3D3D] mb-1 block">Time Slot *</label>
-                  {/* ── All slots shown — taken ones are greyed out and unselectable ── */}
                   <select
                     name="time"
                     required
@@ -272,11 +276,7 @@ function BookingDialog({ date, bookedSlotsMap, onClose, onConfirm }) {
                     {TIME_SLOTS.map((slot) => {
                       const isTaken = takenSlots.includes(slot);
                       return (
-                        <option
-                          key={slot}
-                          value={isTaken ? "" : slot}
-                          disabled={isTaken}
-                        >
+                        <option key={slot} value={isTaken ? "" : slot} disabled={isTaken}>
                           {formatTime(slot)}{isTaken ? " — Taken" : ""}
                         </option>
                       );
@@ -288,10 +288,23 @@ function BookingDialog({ date, bookedSlotsMap, onClose, onConfirm }) {
                 </div>
               </div>
 
+              {/* Subject — pre-filled but still editable */}
               <div>
-                <label className="text-xs font-semibold text-[#1A3D3D] mb-1 block">Subject</label>
-                <input name="subject" value={form.subject} onChange={handleChange} placeholder="e.g. Anxiety, Stress Management"
-                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-[#2D8080] transition-colors" />
+                <label className="text-xs font-semibold text-[#1A3D3D] mb-1 block">
+                  Session Type
+                  {form.subject && <span className="ml-1 text-[#2D8080] font-normal">(pre-selected from your choice)</span>}
+                </label>
+                <select
+                  name="subject"
+                  value={form.subject}
+                  onChange={handleChange}
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-[#2D8080] transition-colors bg-white"
+                >
+                  <option value="">Select session type</option>
+                  <option value="Individual Therapy">Individual Therapy</option>
+                  <option value="Couples Therapy">Couples Therapy</option>
+                  <option value="Other">Other</option>
+                </select>
               </div>
 
               <div>
@@ -323,25 +336,13 @@ function BookingDialog({ date, bookedSlotsMap, onClose, onConfirm }) {
 }
 
 // ── Main Section ──────────────────────────────────────────────────────────────
-export default function ContactSection() {
-  const [selectedDate,   setSelectedDate]   = useState(null);
-  const [bookedSlotsMap, setBookedSlotsMap] = useState({});
-  const [loading,        setLoading]        = useState(true);
-  const [confirmedList,  setConfirmedList]  = useState([]);
-
-  useEffect(() => {
-    getAllBookedSlots().then((map) => {
-      setBookedSlotsMap(map);
-      setLoading(false);
-    });
-  }, []);
+export default function ContactSection({ bookedSlotsMap = {}, loading = true, onBookingConfirm }) {
+  const [selectedDate,  setSelectedDate]  = useState(null);
+  const [confirmedList, setConfirmedList] = useState([]);
 
   const handleConfirm = (date, time) => {
-    setBookedSlotsMap((prev) => ({
-      ...prev,
-      [date]: [...(prev[date] || []), time],
-    }));
-    setConfirmedList((prev) => [...prev, { date, time }]);
+    onBookingConfirm?.(date, time);
+    setConfirmedList(prev => [...prev, { date, time }]);
   };
 
   return (
@@ -363,6 +364,8 @@ export default function ContactSection() {
             <br />Join us today and start your journey to{" "}
             <span className="text-[#c7d0f8]">well-being!</span>
           </motion.h2>
+
+
         </div>
       </div>
 
