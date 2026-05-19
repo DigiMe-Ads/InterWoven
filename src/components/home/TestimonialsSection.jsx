@@ -1,34 +1,5 @@
 import { motion } from "framer-motion";
-
-const testimonials = [
-  {
-    id: 1,
-    stars: 5,
-    quote:
-      '"Thanks to the supportive team, I\'ve learned how to manage my anxiety and feel more in control of my life. I\'m truly grateful for the care and guidance they provided."',
-    name: "Jessica M",
-    role: "Digital Agency",
-    avatar: "/images/home/jessica.jpg",
-  },
-  {
-    id: 2,
-    stars: 5,
-    quote:
-      '"The counseling sessions were a game-changer for me. The therapist was so understanding, and I finally felt heard. I highly recommend their services to anyone struggling."',
-    name: "David L.",
-    role: "Product Manager",
-    avatar: "/images/home/david.jpg",
-  },
-  {
-    id: 3,
-    stars: 5,
-    quote:
-      '"I joined one of their mindfulness workshops, and it helped me find a sense of calm I didn\'t know I could achieve. Their approach is practical and easy to follow."',
-    name: "Emily R.",
-    role: "Content Creator",
-    avatar: "/images/home/emily.jpg",
-  },
-];
+import { useContent } from "../../hooks/useContent";
 
 function StarRating({ count }) {
   return (
@@ -51,18 +22,14 @@ function TestimonialCard({ testimonial, index }) {
       transition={{ duration: 0.55, delay: index * 0.12, ease: "easeOut" }}
       className="bg-white rounded-2xl p-6 flex flex-col gap-5 border border-[#6B7FD4]/25 shadow-sm"
     >
-      {/* Stars */}
-      <StarRating count={testimonial.stars} />
+      <StarRating count={5} />
 
-      {/* Quote */}
       <p className="text-sm font-bold text-[#191919] leading-relaxed flex-1">
         {testimonial.quote}
       </p>
 
-      {/* Divider */}
       <div className="w-full h-px bg-gray-100" />
 
-      {/* Avatar + name */}
       <div className="flex items-center gap-3">
         <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-gray-100">
           <img
@@ -74,10 +41,7 @@ function TestimonialCard({ testimonial, index }) {
               e.target.nextSibling.style.display = "flex";
             }}
           />
-          {/* Fallback initials */}
-          <div
-            className="hidden w-full h-full items-center justify-center bg-[#E8EBFA] text-[#425CA9] font-bold text-sm"
-          >
+          <div className="hidden w-full h-full items-center justify-center bg-[#E8EBFA] text-[#425CA9] font-bold text-sm">
             {testimonial.name.charAt(0)}
           </div>
         </div>
@@ -91,21 +55,23 @@ function TestimonialCard({ testimonial, index }) {
 }
 
 export default function TestimonialsSection() {
+  const { content } = useContent("testimonials");
+
+  const testimonials = [
+    { id: 1, quote: content.t1Quote, name: content.t1Name, role: content.t1Role, avatar: "/images/home/jessica.jpg" },
+    { id: 2, quote: content.t2Quote, name: content.t2Name, role: content.t2Role, avatar: "/images/home/david.jpg" },
+    { id: 3, quote: content.t3Quote, name: content.t3Name, role: content.t3Role, avatar: "/images/home/emily.jpg" },
+  ];
+
   return (
     <section className="relative bg-white pt-20 pb-32 px-6 overflow-hidden">
 
-      {/* Solid pink/mauve strip — bottom portion */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none"
-        style={{ backgroundColor: "#EDE0EE" }}
-      />
+      <div className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none" style={{ backgroundColor: "#EDE0EE" }} />
 
       <div className="relative z-10 max-w-6xl mx-auto">
 
-        {/* Header: left heading + right description */}
+        {/* Header */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start mb-12">
-
-          {/* Left */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -113,14 +79,13 @@ export default function TestimonialsSection() {
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <p className="text-xs font-extrabold tracking-[0.18em] uppercase text-[#425CA9] mb-3">
-              Client Feedbacks
+              {content.eyebrow}
             </p>
             <h2 className="text-4xl font-extrabold text-[#191919] leading-tight">
-              Healing Begins with a<br />Conversation
+              {content.heading}
             </h2>
           </motion.div>
 
-          {/* Right */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -129,14 +94,12 @@ export default function TestimonialsSection() {
             className="lg:pt-10"
           >
             <p className="text-sm text-gray-400 leading-relaxed max-w-sm">
-              Healing isn't rushed—it's supported. Our team walks beside you,
-              offering understanding and tailored support to help you rebuild
-              confidence and emotional peace day by day.
+              {content.body}
             </p>
           </motion.div>
         </div>
 
-        {/* Cards grid */}
+        {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
             <TestimonialCard key={t.id} testimonial={t} index={i} />

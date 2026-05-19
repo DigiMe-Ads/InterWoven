@@ -1,33 +1,22 @@
 import { motion } from "framer-motion";
+import { useContent } from "../../hooks/useContent";
 
-const services = [
-  {
-    id: 1,
-    title: "1:1 Sessions",
-    description:
-      "Personalized support tailored to individual needs",
-    image: "/images/home/service-individual.jpg",
-    icon: "/images/home/icon-indivdual.png",
-  },
-  {
-    id: 2,
-    title: "Personal Development",
-    description:
-      "Growth-focused programs to improve mindset and performance",
-    image: "/images/home/service-group.jpg",
-    icon: "/images/home/icon-group.png",
-  },
-  {
-    id: 3,
-    title: "Mental Wellness Support",
-    description:
-      "Guidance for emotional and mental well-being",
-    image: "/images/home/service-stress.jpg",
-    icon: "/images/home/icon-stress.png",
-  },
+// Image and icon paths stay hardcoded — not text content
+const SERVICE_IMAGES = [
+  { image: "/images/home/service-individual.jpg", icon: "/images/home/icon-indivdual.png" },
+  { image: "/images/home/service-group.jpg",      icon: "/images/home/icon-group.png" },
+  { image: "/images/home/service-stress.jpg",     icon: "/images/home/icon-stress.png" },
 ];
 
 export default function ServicesSection() {
+  const { content } = useContent("services");
+
+  const services = [
+    { id: 1, title: content.svc1Title, description: content.svc1Desc, ...SERVICE_IMAGES[0] },
+    { id: 2, title: content.svc2Title, description: content.svc2Desc, ...SERVICE_IMAGES[1] },
+    { id: 3, title: content.svc3Title, description: content.svc3Desc, ...SERVICE_IMAGES[2] },
+  ];
+
   return (
     <section id="services" className="bg-white py-20 px-6">
       <div className="max-w-6xl mx-auto">
@@ -41,10 +30,10 @@ export default function ServicesSection() {
           className="text-center mb-12"
         >
           <p className="text-xs font-extrabold tracking-[0.18em] uppercase text-[#425CA9] mb-2">
-            Our Services
+            {content.eyebrow}
           </p>
           <h2 className="text-4xl font-extrabold text-[#191919]">
-            Breaking Stigmas, Building Strength
+            {content.heading}
           </h2>
         </motion.div>
 
@@ -79,37 +68,16 @@ function ServiceCard({ service, index }) {
           style={{ height: 220 }}
         />
 
-        {/* Bottom row over image: icon left, Read More right */}
         <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-          {/* Icon circle */}
           <div className="flex items-center justify-center shadow-lg">
             <img
               src={service.icon}
               alt=""
               className="w-12 h-12 object-contain"
-              onError={(e) => {
-                e.target.style.display = "none";
-                e.target.nextSibling.style.display = "block";
-              }}
+              onError={(e) => { e.target.style.display = "none"; }}
             />
-            {/* Fallback icon */}
-            {/* <svg
-              style={{ display: "none" }}
-              className="w-6 h-6 text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-              />
-            </svg> */}
           </div>
 
-          {/* Read More pill */}
           <motion.a
             href="#contact"
             whileHover={{ scale: 1.05 }}
@@ -123,15 +91,10 @@ function ServiceCard({ service, index }) {
 
       {/* Text area */}
       <div className="px-5 pt-5 pb-6 flex flex-col gap-3">
-        {/* Title */}
         <h3 className="text-xl font-extrabold text-[#212529]">
           {service.title}
         </h3>
-
-        {/* Thin divider */}
         <div className="w-full h-px bg-[#212529]/30" />
-
-        {/* Description */}
         <p className="text-sm text-gray-500 leading-relaxed">
           {service.description}
         </p>

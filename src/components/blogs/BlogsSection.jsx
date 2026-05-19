@@ -1,66 +1,14 @@
 import { motion } from "framer-motion";
+import { useContent } from "../../hooks/useContent";
 
-const posts = [
-  {
-    id: 1,
-    category: "Depression",
-    day: "27",
-    month: "Mar",
-    image: "/images/home/service-stress.jpg",
-    title: "The Role of Self-Care in Reducing Stress Levels",
-    excerpt:
-      "This group provides a compassionate and confidential environment where individuals can openly discuss their fears, learn healthy coping mechanisms, and understand that they are not alone in their struggles with constant worry and unease...",
-  },
-  {
-    id: 2,
-    category: "Anxiety",
-    day: "17",
-    month: "Feb",
-    image: "/images/home/service-stress.jpg",
-    title: "Simple Steps to Build Emotional Resilience Daily",
-    excerpt:
-      "Through guided conversations and shared stories, members are encouraged to reconnect with themselves and others, gradually rebuilding emotional strength, motivation, and hope in a space that prioritizes healing and patience...",
-  },
-  {
-    id: 3,
-    category: "Wellness",
-    day: "06",
-    month: "Jan",
-    image: "/images/home/service-stress.jpg",
-    title: "Signs You Might Need Professional Mental Health Support",
-    excerpt:
-      "Participants learn to identify stress triggers and replace negative responses with practical, mindful strategies, all while benefiting from the encouragement and accountability of a supportive and understanding peer community...",
-  },
-  {
-    id: 4,
-    category: "Mindfulness",
-    day: "12",
-    month: "Dec",
-    image: "/images/home/service-stress.jpg",
-    title: "Mindfulness Practices to Improve Mental Well-Being",
-    excerpt:
-      "Designed to help individuals navigate the complex emotions that follow a loss, this group offers comfort, empathy, and guidance through meaningful dialogue, shared remembrance, and connection with others on a similar journey...",
-  },
-  {
-    id: 5,
-    category: "Depression",
-    day: "10",
-    month: "Nov",
-    image: "/images/home/service-stress.jpg",
-    title: "Effective Strategies to Overcome Negative Thinking Patterns",
-    excerpt:
-      "Focusing on personal empowerment and mental flexibility, this group helps individuals develop inner strength, regulate emotions, and handle life's challenges with a renewed sense of control and self confidence to a new chapter...",
-  },
-  {
-    id: 6,
-    category: "Anxiety",
-    day: "30",
-    month: "Oct",
-    image: "/images/home/service-stress.jpg",
-    title: "How to Manage Anxiety in Everyday Life",
-    excerpt:
-      "Guided by trauma-informed professionals, this group creates a safe and empowering space where participants can process painful experiences, rebuild trust in themselves and others, and take meaningful steps toward long-term recovery...",
-  },
+// Dates and images stay hardcoded — not editable text content
+const POST_META = [
+  { id: 1, day: "27", month: "Mar", image: "/images/home/service-stress.jpg" },
+  { id: 2, day: "17", month: "Feb", image: "/images/home/service-stress.jpg" },
+  { id: 3, day: "06", month: "Jan", image: "/images/home/service-stress.jpg" },
+  { id: 4, day: "12", month: "Dec", image: "/images/home/service-stress.jpg" },
+  { id: 5, day: "10", month: "Nov", image: "/images/home/service-stress.jpg" },
+  { id: 6, day: "30", month: "Oct", image: "/images/home/service-stress.jpg" },
 ];
 
 function BlogCard({ post, index }) {
@@ -72,49 +20,47 @@ function BlogCard({ post, index }) {
       transition={{ duration: 0.55, delay: index * 0.08, ease: "easeOut" }}
       className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col group cursor-pointer hover:shadow-md transition-shadow"
     >
-      {/* Image area */}
       <div className="relative overflow-hidden" style={{ height: 200 }}>
         <img
           src={post.image}
           alt={post.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
-
-        {/* Category badge — top left */}
         <div className="absolute top-3 left-3">
           <span className="bg-[#3D4F8F] text-white text-[10px] font-bold px-3 py-1 rounded-md">
             {post.category}
           </span>
         </div>
-
-        {/* Date badge — bottom left, overlapping image/content border */}
-        <div
-          className="absolute bottom-5 left-4 translate-y-1/2 bg-[#2D3D7A] text-white rounded-md px-3 py-1.5 text-center min-w-10 z-10"
-        >
+        <div className="absolute bottom-5 left-4 translate-y-1/2 bg-[#2D3D7A] text-white rounded-md px-3 py-1.5 text-center min-w-10 z-10">
           <p className="text-base font-extrabold leading-none">{post.day}</p>
           <p className="text-[10px] opacity-80 mt-0.5">{post.month}</p>
         </div>
       </div>
 
-      {/* Text content */}
       <div className="flex flex-col gap-2 px-5 pt-8 pb-5 flex-1">
-        <h3 className="text-base font-extrabold text-[#1E2A4A] leading-snug">
-          {post.title}
-        </h3>
-        <p className="text-xs text-gray-400 leading-relaxed flex-1">
-          {post.excerpt}
-        </p>
+        <h3 className="text-base font-extrabold text-[#1E2A4A] leading-snug">{post.title}</h3>
+        <p className="text-xs text-gray-400 leading-relaxed flex-1">{post.excerpt}</p>
       </div>
     </motion.div>
   );
 }
 
 export default function BlogSection() {
+  const { content } = useContent("blogPageExtended");
+
+  const posts = [
+    { ...POST_META[0], title: content.post1Title, category: content.post1Cat, excerpt: content.post1Excerpt },
+    { ...POST_META[1], title: content.post2Title, category: content.post2Cat, excerpt: content.post2Excerpt },
+    { ...POST_META[2], title: content.post3Title, category: content.post3Cat, excerpt: content.post3Excerpt },
+    { ...POST_META[3], title: content.post4Title, category: content.post4Cat, excerpt: content.post4Excerpt },
+    { ...POST_META[4], title: content.post5Title, category: content.post5Cat, excerpt: content.post5Excerpt },
+    { ...POST_META[5], title: content.post6Title, category: content.post6Cat, excerpt: content.post6Excerpt },
+  ];
+
   return (
     <section id="blog" className="bg-white py-20 px-6">
       <div className="max-w-6xl mx-auto">
 
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -123,14 +69,13 @@ export default function BlogSection() {
           className="text-center mb-12"
         >
           <p className="text-xs font-bold tracking-[0.18em] uppercase text-[#6B7FD4] mb-2">
-            Our Blogs
+            {content.eyebrow}
           </p>
           <h2 className="text-4xl font-extrabold text-[#1E2A4A]">
-            Read Our Articles
+            {content.heading}
           </h2>
         </motion.div>
 
-        {/* 3-col grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post, i) => (
             <BlogCard key={post.id} post={post} index={i} />

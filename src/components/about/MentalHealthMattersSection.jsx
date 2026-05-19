@@ -1,29 +1,21 @@
 import { motion } from "framer-motion";
-
-const bulletPoints = [
-  {
-    label: "Our Mission",
-    text: "To make support accessible, break stigma, and empower individuals to live better lives.",
-  },
-  {
-    label: "Our Vision",
-    text: "A world where support is normalized, growth is continuous, and no one feels alone.",
-  },
-  {
-    label: "Why 'Interwoven'",
-    text: "Life is interconnected — our emotions, experiences, and growth are all woven together. Interwoven represents this journey of connection and support.",
-  },
-];
-
-const bulletLabels = ["Introduction", "Mission", "Vision"];
-
-const services = [
-  "Free Consultation",
-  "Mental Satisfaction",
-  "Emergency Service",
-];
+import { useContent } from "../../hooks/useContent";
 
 export default function MentalHealthMattersSection() {
+  const { content } = useContent("mentalHealthMatters");
+
+  const bulletPoints = [
+    { label: content.bullet1Label, text: content.bullet1Text },
+    { label: content.bullet2Label, text: content.bullet2Text },
+    { label: content.bullet3Label, text: content.bullet3Text },
+  ].filter(b => b.label || b.text);
+
+  const services = [
+    content.blueService1,
+    content.blueService2,
+    content.blueService3,
+  ].filter(Boolean);
+
   return (
     <section className="bg-white py-20 px-6">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-12 items-center">
@@ -56,21 +48,18 @@ export default function MentalHealthMattersSection() {
         >
           {/* Text column */}
           <div className="space-y-5">
-            {/* Eyebrow */}
             <p className="text-xs font-bold tracking-[0.18em] uppercase text-[#6B7FD4]">
-              About Us
+              {content.eyebrow}
             </p>
 
-            {/* Heading */}
-            <h2 className="text-4xl font-extrabold text-[#1E2A4A] leading-tight">
-              Because Your Mental<br />Health Matters
+            <h2 className="text-4xl font-extrabold text-[#1E2A4A] leading-tight whitespace-pre-line">
+              {content.heading}
             </h2>
 
             <p className="text-sm text-gray-500 leading-relaxed max-w-lg">
-              At Interwoven, we believe every individual deserves access to guidance, support, and growth opportunities. 
+              {content.body}
             </p>
 
-            {/* Bullet points */}
             <ul className="space-y-3 pt-1">
               {bulletPoints.map((point, i) => (
                 <motion.li
@@ -81,18 +70,8 @@ export default function MentalHealthMattersSection() {
                   transition={{ duration: 0.4, delay: 0.2 + i * 0.08 }}
                   className="flex items-start gap-3"
                 >
-                  <svg
-                    className="w-4 h-4 text-[#6B7FD4] flex-shrink-0 mt-0.5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2.5}
-                      d="M9 5l7 7-7 7"
-                    />
+                  <svg className="w-4 h-4 text-[#6B7FD4] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                   </svg>
                   <span className="text-sm text-gray-500 leading-relaxed">
                     <span className="font-semibold text-[#1E2A4A]">{point.label}: </span>
@@ -110,30 +89,17 @@ export default function MentalHealthMattersSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.55, delay: 0.35 }}
             className="rounded-2xl p-6 flex flex-col gap-4 w-52 flex-shrink-0"
-            style={{
-              background: "linear-gradient(145deg, #5B6FD4 0%, #3D52B0 100%)",
-            }}
+            style={{ background: "linear-gradient(145deg, #5B6FD4 0%, #3D52B0 100%)" }}
           >
             <h3 className="text-base font-extrabold text-white leading-snug">
-              Together, We Overcome
+              {content.blueCardTitle}
             </h3>
-
             <div className="space-y-3 pt-1">
               {services.map((item, i) => (
                 <div key={i} className="flex items-center gap-2">
                   <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                    <svg
-                      className="w-3 h-3 text-white"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={3}
-                        d="M5 13l4 4L19 7"
-                      />
+                    <svg className="w-3 h-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
                   <span className="text-sm text-white font-medium">{item}</span>
