@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { useContent } from "../../hooks/useContent";
 
-// Dates and images stay hardcoded — not editable text content
 const POST_META = [
-  { id: 1, day: "27", month: "Mar", image: "/images/home/service-stress.jpg" },
-  { id: 2, day: "17", month: "Feb", image: "/images/home/service-stress.jpg" },
-  { id: 3, day: "06", month: "Jan", image: "/images/home/service-stress.jpg" },
-  { id: 4, day: "12", month: "Dec", image: "/images/home/service-stress.jpg" },
-  { id: 5, day: "10", month: "Nov", image: "/images/home/service-stress.jpg" },
-  { id: 6, day: "30", month: "Oct", image: "/images/home/service-stress.jpg" },
+  { id: "1", day: "27", month: "Mar", image: "/images/home/service-stress.jpg" },
+  { id: "2", day: "17", month: "Feb", image: "/images/home/service-stress.jpg" },
+  { id: "3", day: "06", month: "Jan", image: "/images/home/service-stress.jpg" },
+  { id: "4", day: "12", month: "Dec", image: "/images/home/service-stress.jpg" },
+  { id: "5", day: "10", month: "Nov", image: "/images/home/service-stress.jpg" },
+  { id: "6", day: "30", month: "Oct", image: "/images/home/service-stress.jpg" },
 ];
 
 function BlogCard({ post, index }) {
@@ -18,29 +18,27 @@ function BlogCard({ post, index }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.55, delay: index * 0.08, ease: "easeOut" }}
-      className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col group cursor-pointer hover:shadow-md transition-shadow"
     >
-      <div className="relative overflow-hidden" style={{ height: 200 }}>
-        <img
-          src={post.image}
-          alt={post.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-        <div className="absolute top-3 left-3">
-          <span className="bg-[#3D4F8F] text-white text-[10px] font-bold px-3 py-1 rounded-md">
-            {post.category}
-          </span>
+      <Link to={`/blog/${post.id}`}
+        className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col group hover:shadow-md transition-shadow block"
+      >
+        <div className="relative overflow-hidden" style={{ height: 200 }}>
+          <img src={post.image} alt={post.title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          <div className="absolute top-3 left-3">
+            <span className="bg-[#3D4F8F] text-white text-[10px] font-bold px-3 py-1 rounded-md">{post.category}</span>
+          </div>
+          <div className="absolute bottom-5 left-4 translate-y-1/2 bg-[#2D3D7A] text-white rounded-md px-3 py-1.5 text-center min-w-10 z-10">
+            <p className="text-base font-extrabold leading-none">{post.day}</p>
+            <p className="text-[10px] opacity-80 mt-0.5">{post.month}</p>
+          </div>
         </div>
-        <div className="absolute bottom-5 left-4 translate-y-1/2 bg-[#2D3D7A] text-white rounded-md px-3 py-1.5 text-center min-w-10 z-10">
-          <p className="text-base font-extrabold leading-none">{post.day}</p>
-          <p className="text-[10px] opacity-80 mt-0.5">{post.month}</p>
+        <div className="flex flex-col gap-2 px-5 pt-8 pb-5 flex-1">
+          <h3 className="text-base font-extrabold text-[#1E2A4A] leading-snug group-hover:text-[#425CA9] transition-colors">{post.title}</h3>
+          <p className="text-xs text-gray-400 leading-relaxed flex-1">{post.excerpt}</p>
+          <span className="text-xs font-semibold text-[#425CA9] mt-1">Read more →</span>
         </div>
-      </div>
-
-      <div className="flex flex-col gap-2 px-5 pt-8 pb-5 flex-1">
-        <h3 className="text-base font-extrabold text-[#1E2A4A] leading-snug">{post.title}</h3>
-        <p className="text-xs text-gray-400 leading-relaxed flex-1">{post.excerpt}</p>
-      </div>
+      </Link>
     </motion.div>
   );
 }
@@ -60,28 +58,13 @@ export default function BlogSection() {
   return (
     <section id="blog" className="bg-white py-20 px-6">
       <div className="max-w-6xl mx-auto">
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <p className="text-xs font-bold tracking-[0.18em] uppercase text-[#6B7FD4] mb-2">
-            {content.eyebrow}
-          </p>
-          <h2 className="text-4xl font-extrabold text-[#1E2A4A]">
-            {content.heading}
-          </h2>
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.6 }} className="text-center mb-12">
+          <p className="text-xs font-bold tracking-[0.18em] uppercase text-[#6B7FD4] mb-2">{content.eyebrow}</p>
+          <h2 className="text-4xl font-extrabold text-[#1E2A4A]">{content.heading}</h2>
         </motion.div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {posts.map((post, i) => (
-            <BlogCard key={post.id} post={post} index={i} />
-          ))}
+          {posts.map((post, i) => <BlogCard key={post.id} post={post} index={i} />)}
         </div>
-
       </div>
     </section>
   );

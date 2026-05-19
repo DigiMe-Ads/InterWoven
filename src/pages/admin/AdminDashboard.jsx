@@ -1,40 +1,42 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../../lib/firebase";
 import { getContent, saveContent } from "../../lib/contentService";
 import { TextField, AdminSection } from "./AdminFields";
+import BlogPostEditor from "./BlogPostEditor";
+import { useEffect } from "react";
 
 const SECTIONS = [
-  { key: "global",       label: "Global — Phone, Email, Address" },
-  { key: "hero",         label: "Home — Hero" },
-  { key: "features",     label: "Home — Features Cards" },
-  { key: "about",        label: "Home — About Section" },
-  { key: "howWeHelp",    label: "Home — How We Help" },
-  { key: "services",     label: "Home — Services" },
-  { key: "whyChooseUs",  label: "Home — Why Choose Us" },
-  { key: "testimonials", label: "Home — Testimonials" },
-  { key: "contact",      label: "Home — Contact / Booking" },
-  { key: "extendedServices", label: "Services Page — Extended Services" },
-  { key: "aboutPage",    label: "About Page" },
-{ key: "mentalHealthMatters", label: "About Page — Mental Health Matters" },
-  { key: "howWeHelpAbout", label: "About Page — How We Help" },
-  { key: "contactPage",  label: "Contact Page" },
-  { key: "pricingPage",  label: "Pricing Page" },
-//   { key: "blogPage",     label: "Blog Page" },
-  { key: "blogPageExtended", label: "Blog Page — All Posts" },
-  { key: "footer",       label: "Footer" },
+  { key: "global",           label: "Global — Phone, Email, Address" },
+  { key: "hero",             label: "Home — Hero" },
+  { key: "features",         label: "Home — Features Cards" },
+  { key: "about",            label: "Home — About Section" },
+  { key: "howWeHelp",        label: "Home — How We Help" },
+  { key: "services",         label: "Home — Services" },
+  { key: "whyChooseUs",      label: "Home — Why Choose Us" },
+  { key: "testimonials",     label: "Home — Testimonials" },
+  { key: "contact",          label: "Home — Contact / Booking" },
+  { key: "aboutPage",        label: "About Page" },
+  { key: "mentalHealthMatters", label: "About Page — Mental Health Matters" },
+  { key: "howWeHelpAbout",   label: "About Page — How We Help" },
+  { key: "contactPage",      label: "Contact Page" },
+  { key: "pricingPage",      label: "Pricing Page" },
+  { key: "blogPageExtended", label: "Blog Page — Listing" },
+  { key: "__blogPosts__",    label: "Blog Posts — Content Editor" }, // special
+  { key: "extendedServices", label: "Services Page" },
+  { key: "footer",           label: "Footer" },
 ];
 
-// Fields that should render as multiline textarea
 const MULTILINE_KEYS = [
   "body", "desc", "Desc", "quote", "excerpt", "Excerpt",
   "rightBody", "description", "subheading",
   "step1Desc", "step2Desc", "step3Desc",
-  "svc1Desc", "svc2Desc", "svc3Desc",
+  "svc1Desc", "svc2Desc", "svc3Desc", "svc4Desc", "svc5Desc",
   "card1Desc", "card2Desc", "card3Desc", "card4Desc",
   "plan1Desc", "plan2Desc", "plan3Desc",
   "t1Quote", "t2Quote", "t3Quote",
   "bullet1", "bullet2", "bullet3", "bullet4",
+  "bullet1Text", "bullet2Text", "bullet3Text",
   "post1Excerpt", "post2Excerpt", "post3Excerpt",
   "post4Excerpt", "post5Excerpt", "post6Excerpt",
 ];
@@ -43,7 +45,7 @@ function isMultiline(key) {
   return MULTILINE_KEYS.some(m => key === m || key.endsWith(m.charAt(0).toUpperCase() + m.slice(1)));
 }
 
-// ── Single section editor ─────────────────────────────────────────────────────
+// ── Content section editor ────────────────────────────────────────────────────
 function SectionEditor({ sectionKey, label }) {
   const [data,   setData]   = useState(null);
   const [saving, setSaving] = useState(false);
@@ -77,13 +79,7 @@ function SectionEditor({ sectionKey, label }) {
   return (
     <AdminSection title={label} onSave={handleSave} saving={saving} saved={saved}>
       {Object.entries(data).map(([key, value]) => (
-        <TextField
-          key={key}
-          label={key}
-          value={value}
-          multiline={isMultiline(key)}
-          onChange={val => handleChange(key, val)}
-        />
+        <TextField key={key} label={key} value={value} multiline={isMultiline(key)} onChange={val => handleChange(key, val)} />
       ))}
     </AdminSection>
   );
@@ -113,15 +109,17 @@ export default function AdminDashboard({ user }) {
 
         <nav className="flex-1 overflow-y-auto py-3 px-3 space-y-0.5">
           {SECTIONS.map(s => (
-            <button
-              key={s.key}
+            <button key={s.key}
               onClick={() => { setActiveSection(s.key); setSidebarOpen(false); }}
               className={`w-full text-left px-4 py-2.5 rounded-xl text-xs font-semibold transition-colors ${
                 activeSection === s.key
                   ? "bg-[#E8F5F5] text-[#2D8080]"
+                  : s.key === "__blogPosts__"
+                  ? "text-[#425CA9] hover:bg-blue-50"
                   : "text-gray-500 hover:bg-gray-50 hover:text-gray-700"
               }`}
             >
+              {s.key === "__blogPosts__" && <span className="mr-1.5">✏️</span>}
               {s.label}
             </button>
           ))}
@@ -129,42 +127,39 @@ export default function AdminDashboard({ user }) {
 
         <div className="px-4 py-4 border-t border-gray-100 space-y-2">
           <p className="text-[10px] text-gray-400 truncate font-medium">{user.email}</p>
-          <button
-            onClick={() => signOut(auth)}
-            className="w-full text-xs font-semibold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-4 py-2 rounded-xl transition-colors"
-          >
+          <button onClick={() => signOut(auth)}
+            className="w-full text-xs font-semibold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-4 py-2 rounded-xl transition-colors">
             Sign Out
           </button>
         </div>
       </aside>
 
-      {/* Mobile sidebar overlay */}
-      {sidebarOpen && (
-        <div className="fixed inset-0 z-30 bg-black/30 lg:hidden" onClick={() => setSidebarOpen(false)} />
-      )}
+      {sidebarOpen && <div className="fixed inset-0 z-30 bg-black/30 lg:hidden" onClick={() => setSidebarOpen(false)} />}
 
       {/* Main */}
       <div className="flex-1 flex flex-col min-w-0">
-
-        {/* Top bar */}
         <header className="bg-white border-b border-gray-100 px-6 py-4 flex items-center gap-4 sticky top-0 z-20 shadow-sm">
-          <button
-            className="lg:hidden p-2 rounded-xl hover:bg-gray-100 transition-colors"
-            onClick={() => setSidebarOpen(v => !v)}
-          >
+          <button className="lg:hidden p-2 rounded-xl hover:bg-gray-100 transition-colors" onClick={() => setSidebarOpen(v => !v)}>
             <svg className="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
           <div>
             <h1 className="text-sm font-extrabold text-gray-800">{activeLabel}</h1>
-            <p className="text-xs text-gray-400 mt-0.5">Edit text and save — changes appear on the live site instantly</p>
+            <p className="text-xs text-gray-400 mt-0.5">
+              {activeSection === "__blogPosts__"
+                ? "Write and format full blog post content with the rich text editor"
+                : "Edit text and save — changes appear on the live site instantly"}
+            </p>
           </div>
         </header>
 
         <main className="flex-1 p-6 overflow-y-auto">
           <div className="max-w-4xl mx-auto">
-            <SectionEditor key={activeSection} sectionKey={activeSection} label={activeLabel} />
+            {activeSection === "__blogPosts__"
+              ? <BlogPostEditor />
+              : <SectionEditor key={activeSection} sectionKey={activeSection} label={activeLabel} />
+            }
           </div>
         </main>
       </div>
